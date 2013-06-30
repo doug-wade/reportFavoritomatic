@@ -1,0 +1,2 @@
+reportFavoritomatic
+===================
