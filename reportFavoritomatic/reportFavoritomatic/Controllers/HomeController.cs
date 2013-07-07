@@ -11,8 +11,10 @@ namespace reportFavoritomatic.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-            ViewBag.Favorites = new List<Favorites>();
+            using (var ctx = new Entities())
+            {
+                ViewBag.Favorites = ctx.favorites;
+            }
 
             return View();
         }

@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dwadeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="dwadeModelStoreContainer">
+          <EntitySet Name="category" EntityType="dwadeModel.Store.category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="end_user" EntityType="dwadeModel.Store.end_user" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="favorite" EntityType="dwadeModel.Store.favorite" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="report" EntityType="dwadeModel.Store.report" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__favorite__report__2C3393D0" Association="dwadeModel.Store.FK__favorite__report__2C3393D0">
+            <End Role="report" EntitySet="report" />
+            <End Role="favorite" EntitySet="favorite" />
+          </AssociationSet>
+          <AssociationSet Name="FK__favorite__user_i__2D27B809" Association="dwadeModel.Store.FK__favorite__user_i__2D27B809">
+            <End Role="end_user" EntitySet="end_user" />
+            <End Role="favorite" EntitySet="favorite" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="parent_category_id" Type="int" />
+          <Property Name="category_name" Type="varchar" MaxLength="150" />
+          <Property Name="creation_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="end_user">
+          <Key>
+            <PropertyRef Name="domain_id" />
+          </Key>
+          <Property Name="domain_id" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="user_name" Type="varchar" MaxLength="256" />
+          <Property Name="is_supervisor" Type="bit" />
+          <Property Name="supervisor_id" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="favorite">
+          <Key>
+            <PropertyRef Name="favorite_id" />
+          </Key>
+          <Property Name="favorite_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="favorite_name" Type="varchar" MaxLength="256" />
+          <Property Name="report_id" Type="varchar" MaxLength="128" />
+          <Property Name="report_path" Type="varchar" MaxLength="256" />
+          <Property Name="user_id" Type="varchar" MaxLength="256" />
+          <Property Name="created_by_id" Type="varchar" MaxLength="128" />
+          <Property Name="creation_date" Type="datetime" />
+          <Property Name="next_reminder_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="report">
+          <Key>
+            <PropertyRef Name="report_id" />
+          </Key>
+          <Property Name="report_id" Type="varchar" Nullable="false" MaxLength="128" />
+          <Property Name="report_name" Type="varchar" MaxLength="256" />
+          <Property Name="creation_date" Type="datetime" />
+          <Property Name="last_updated_date" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__favorite__report__2C3393D0">
+          <End Role="report" Type="dwadeModel.Store.report" Multiplicity="0..1" />
+          <End Role="favorite" Type="dwadeModel.Store.favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="report">
+              <PropertyRef Name="report_id" />
+            </Principal>
+            <Dependent Role="favorite">
+              <PropertyRef Name="report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__favorite__user_i__2D27B809">
+          <End Role="end_user" Type="dwadeModel.Store.end_user" Multiplicity="0..1" />
+          <End Role="favorite" Type="dwadeModel.Store.favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="end_user">
+              <PropertyRef Name="domain_id" />
+            </Principal>
+            <Dependent Role="favorite">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dwadeModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="dwadeModel.category" />
+          <EntitySet Name="end_user" EntityType="dwadeModel.end_user" />
+          <EntitySet Name="favorites" EntityType="dwadeModel.favorite" />
+          <EntitySet Name="reports" EntityType="dwadeModel.report" />
+          <AssociationSet Name="FK__favorite__user_i__2D27B809" Association="dwadeModel.FK__favorite__user_i__2D27B809">
+            <End Role="end_user" EntitySet="end_user" />
+            <End Role="favorite" EntitySet="favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__favorite__report__2C3393D0" Association="dwadeModel.FK__favorite__report__2C3393D0">
+            <End Role="report" EntitySet="reports" />
+            <End Role="favorite" EntitySet="favorites" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="parent_category_id" Type="Int32" />
+          <Property Name="category_name" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="creation_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="end_user">
+          <Key>
+            <PropertyRef Name="domain_id" />
+          </Key>
+          <Property Name="domain_id" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="user_name" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="is_supervisor" Type="Boolean" />
+          <Property Name="supervisor_id" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="favorites" Relationship="dwadeModel.FK__favorite__user_i__2D27B809" FromRole="end_user" ToRole="favorite" />
+        </EntityType>
+        <EntityType Name="favorite">
+          <Key>
+            <PropertyRef Name="favorite_id" />
+          </Key>
+          <Property Name="favorite_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="favorite_name" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="report_id" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="report_path" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="user_id" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="created_by_id" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="creation_date" Type="DateTime" Precision="3" />
+          <Property Name="next_reminder_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="end_user" Relationship="dwadeModel.FK__favorite__user_i__2D27B809" FromRole="favorite" ToRole="end_user" />
+          <NavigationProperty Name="report" Relationship="dwadeModel.FK__favorite__report__2C3393D0" FromRole="favorite" ToRole="report" />
+        </EntityType>
+        <EntityType Name="report">
+          <Key>
+            <PropertyRef Name="report_id" />
+          </Key>
+          <Property Name="report_id" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="report_name" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="creation_date" Type="DateTime" Precision="3" />
+          <Property Name="last_updated_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="favorites" Relationship="dwadeModel.FK__favorite__report__2C3393D0" FromRole="report" ToRole="favorite" />
+        </EntityType>
+        <Association Name="FK__favorite__user_i__2D27B809">
+          <End Role="end_user" Type="dwadeModel.end_user" Multiplicity="0..1" />
+          <End Role="favorite" Type="dwadeModel.favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="end_user">
+              <PropertyRef Name="domain_id" />
+            </Principal>
+            <Dependent Role="favorite">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__favorite__report__2C3393D0">
+          <End Role="report" Type="dwadeModel.report" Multiplicity="0..1" />
+          <End Role="favorite" Type="dwadeModel.favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="report">
+              <PropertyRef Name="report_id" />
+            </Principal>
+            <Dependent Role="favorite">
+              <PropertyRef Name="report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dwadeModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="dwadeModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="parent_category_id" ColumnName="parent_category_id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="end_user">
+            <EntityTypeMapping TypeName="dwadeModel.end_user">
+              <MappingFragment StoreEntitySet="end_user">
+                <ScalarProperty Name="domain_id" ColumnName="domain_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="is_supervisor" ColumnName="is_supervisor" />
+                <ScalarProperty Name="supervisor_id" ColumnName="supervisor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="favorites">
+            <EntityTypeMapping TypeName="dwadeModel.favorite">
+              <MappingFragment StoreEntitySet="favorite">
+                <ScalarProperty Name="favorite_id" ColumnName="favorite_id" />
+                <ScalarProperty Name="favorite_name" ColumnName="favorite_name" />
+                <ScalarProperty Name="report_id" ColumnName="report_id" />
+                <ScalarProperty Name="report_path" ColumnName="report_path" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="created_by_id" ColumnName="created_by_id" />
+                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+                <ScalarProperty Name="next_reminder_date" ColumnName="next_reminder_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reports">
+            <EntityTypeMapping TypeName="dwadeModel.report">
+              <MappingFragment StoreEntitySet="report">
+                <ScalarProperty Name="report_id" ColumnName="report_id" />
+                <ScalarProperty Name="report_name" ColumnName="report_name" />
+                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+                <ScalarProperty Name="last_updated_date" ColumnName="last_updated_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
