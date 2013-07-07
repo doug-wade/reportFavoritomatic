@@ -1,18 +1,20 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<div class="span3">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">Hot Sidebar</li>
+            @for (int i = 0; i < ViewBag.Favorites.Count; i++)
+            {
+                <li><a href="Favorites[i].ReportPath"> Favorites[i].FavoriteName</a></li>
+            }
+        </ul>
+    </div><!--/.well -->
+</div><!--/span-->
+<section class="content-wrapper main-content clear-fix">
 <div class="container-fluid">
     <div class="row-fluid" style="float:left">
-        <div class="span3">
-            <div class="well sidebar-nav">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Hot Sidebar</li>
-                    @for (int i = 0; i < ViewBag.Favorites.Count; i++)
-                    {
-                        <li><a href="Favorites[i].ReportPath"> Favorites[i].FavoriteName</a></li>
-                    }   
-                </ul>
-            </div><!--/.well -->
-        </div><!--/span-->
     </div>
 </div>
+</section>
